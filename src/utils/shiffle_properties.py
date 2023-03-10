@@ -1,12 +1,13 @@
 from random import randint, shuffle, sample
 from collections import namedtuple
 
+from src.data.test_data import ALL_BORTS
 from src.utils.get_pizza_slider_info import get_all_possible_links
 
 
 def shuffle_pizza_props():
     urls = sample(get_all_possible_links(), k=3)
-    borts = ["Обычный", "Сырный", "Колбасный"]
+    borts = ALL_BORTS[:]
     values = [1, *(randint(2, 30) for _ in range(2))]
     shuffle(borts)
     shuffle(values)

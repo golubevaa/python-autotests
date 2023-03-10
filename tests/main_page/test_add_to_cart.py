@@ -12,7 +12,7 @@ from src.waits.common_waits import wait_for_cart_info_changes
 class TestMainPageAddToCart:
 
     @allure.title("Отображение цены продукта в корзине при его добавлении")
-    @pytest.mark.parametrize("pizza_to_add", range(1, 3))
+    @pytest.mark.parametrize("pizza_to_add", [1, 2])
     def test_cart_content(self, slider, pizza_to_add):
         driver = slider.driver
         pizza_to_test = sample(slider.visible_pizzas, k=pizza_to_add)

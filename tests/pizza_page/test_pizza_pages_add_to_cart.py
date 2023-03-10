@@ -5,6 +5,7 @@ from random import randint
 from src.actions.pizza_page_actions.pizza_page_actions import (
     send_keys_to_input_form, get_pizza_title, find_doping_menu, select_doping_by_name
 )
+from src.data.test_data import ADD_BORTS
 from src.helpers.get_cart_content_after_adding_pizza import add_to_cart_and_get_content
 
 
@@ -32,7 +33,7 @@ class TestAddPizzaToCartFromPage:
         assert cart.count_products() == int(pizza_to_add)
 
     @allure.title("Добавление пиццы с дополнительной опцией в корзину")
-    @pytest.mark.parametrize("add_option", ["Сырный", "Колбасный"])
+    @pytest.mark.parametrize("add_option", ADD_BORTS)
     def test_add_pizza_with_add_option(self, pizza_page, add_option):
         driver = pizza_page
 
