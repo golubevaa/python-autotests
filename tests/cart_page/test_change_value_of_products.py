@@ -46,6 +46,7 @@ class TestChangeNumberOfPizzaAtCart:
 
         assert cart_is_empty(driver)
 
+    @allure.title("Изменение кол-ва пицц - пицца с доп. опциями")
     @pytest.mark.parametrize("add_option", ADD_BORTS)
     def test_change_pizza_value_with_add_option(self, prepared_cart_with_pizza, add_option):
         cart, driver = prepared_cart_with_pizza

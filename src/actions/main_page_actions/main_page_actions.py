@@ -2,9 +2,11 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from re import sub
 
+from src.locators.main_page_locators import MainPageLocators
+
 
 def get_add_to_cart_button(product):
-    return product.find_element(By.XPATH, ".//*[contains(text(), 'В корзину')]")
+    return product.find_element(By.XPATH, MainPageLocators.x_path_cart_button)
 
 
 def add_product_to_cart(product):

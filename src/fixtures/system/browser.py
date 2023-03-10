@@ -1,12 +1,10 @@
-import os
-
 from selenium.webdriver import Remote
 import pytest
 
 
 @pytest.fixture()
-def get_driver(environment):
-    selenium_hub = os.getenv("selenium_url")
+def get_driver(pytestconfig):
+    selenium_hub = pytestconfig.getini("selenium_url")
     driver = Remote(desired_capabilities={
         "browserName": "chrome",
         "selenoid:options": {
