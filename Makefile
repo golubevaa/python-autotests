@@ -36,7 +36,7 @@ only_sanity: dc-up
 .PHONY: only_high_priority
 
 only_high_priority: dc-up
-	pytest --alluredir=./allure-results tests/main_page -m sanity
+	pytest --alluredir=./allure-results tests/main_page -m high_priority
 	docker compose down
 
 
