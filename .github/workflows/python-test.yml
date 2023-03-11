@@ -18,7 +18,7 @@ jobs:
 
     steps:
     - name: checkout
-    - uses: actions/checkout@v3
+      uses: actions/checkout@v3
     
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
@@ -31,7 +31,7 @@ jobs:
         pip install -r requirements.txt
         
     - name: Selenium setup
-    - uses: adrielcodeco/docker-compose-run-action@v1
+      uses: adrielcodeco/docker-compose-run-action@v1
       with:
         compose-file: docker-compose.yml
         run-flags: -d
