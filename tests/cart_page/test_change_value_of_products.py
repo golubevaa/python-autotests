@@ -9,8 +9,11 @@ from src.actions.cart_page_actions.cart_page_actions import (
 from src.data.test_data import ADD_BORTS
 
 
+@allure.feature("Корзина")
+@allure.story("Изменение кол-ва товаров в корзине")
 class TestChangeNumberOfPizzaAtCart:
     @allure.title("Уменьшение кол-ва пицц - несколько пицц одного вида в строке")
+    @pytest.mark.sanity
     def test_change_non_single_pizza(self, prepared_cart_with_pizza):
         cart, driver = prepared_cart_with_pizza
         row = cart.get_first_row_by_row_amount_greater_then(1)
@@ -35,6 +38,7 @@ class TestChangeNumberOfPizzaAtCart:
 
         assert cart.get_names_by_amount(int(target)) == []
 
+    @pytest.mark.high_priority
     @allure.title("Уменьшение кол-ва пицц - одна пицца в корзине")
     def test_decrement_single_pizza_at_cart(self, prepared_cart_with_single_pizza):
         cart, driver = prepared_cart_with_single_pizza

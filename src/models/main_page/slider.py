@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from src.locators.main_page_locators import MainPageLocators
@@ -14,17 +15,20 @@ class PizzaSlider:
         self.prev_slick = self.slider.find_element(By.CLASS_NAME, MainPageLocators.class_slider_slick_prev)
 
     def slick_next(self):
-        self.next_slick.click()
-        wait_for_slider_changes(self.driver, self.visible_pizzas)
-        self.visible_pizzas = wait_for_pizza_objects(self.driver)
+        with allure.step("Прокрутка слайдера вправо"):
+            self.next_slick.click()
+            wait_for_slider_changes(self.driver, self.visible_pizzas)
+            self.visible_pizzas = wait_for_pizza_objects(self.driver)
 
     def slick_prev(self):
-        self.prev_slick.click()
-        wait_for_slider_changes(self.driver, self.visible_pizzas)
-        self.visible_pizzas = wait_for_pizza_objects(self.driver)
+        with allure.step("Прокрутка слайдера влево"):
+            self.prev_slick.click()
+            wait_for_slider_changes(self.driver, self.visible_pizzas)
+            self.visible_pizzas = wait_for_pizza_objects(self.driver)
 
     def get_names(self):
-        return [pizza.name for pizza in self.visible_pizzas]
+        with allure.step("Получение списка видимых пицц"):
+            return [pizza.name for pizza in self.visible_pizzas]
 
     def get_by_name(self, name):
-        return [pizza for pizza in self.visible_pizzas if pizza.name == name][0]
+        return [pizza for pizza in self.visible_pizzas if pizza.name == name.lower()][0]

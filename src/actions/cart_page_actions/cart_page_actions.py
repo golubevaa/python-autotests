@@ -1,3 +1,4 @@
+import allure
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -5,7 +6,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from src.locators.cart_page_locators import CartPageLocators
 from src.utils.to_float import str_to_float
 from src.models.cart_page.cart_row import CartRow
-from src.waits.cart_page_waits import wait_for_loading_cart
+from src.waits.cart_page_waits import wait_for_updating_cart
 
 
 def get_cart_products(driver):
@@ -55,25 +56,29 @@ def all_info_about_cart_products(driver):
 
 
 def send_keys_to_number_of_pizza_form(pizza_row, key):
-    _input = pizza_row.find_element(By.TAG_NAME, CartPageLocators.tag_pizza_amount)
-    _input.clear()
-    _input.send_keys(key)
-    pizza_row.parent.execute_script("document.activeElement.blur();")
+    with allure.step(f"Изменение кол-ва пицц в ячейке. Новое значение: {key}"):
+        _input = pizza_row.find_element(By.TAG_NAME, CartPageLocators.tag_pizza_amount)
+        _input.clear()
+        _input.send_keys(key)
+        pizza_row.parent.execute_script("document.activeElement.blur();")
 
 
 def get_update_cart_button(driver):
-    return driver.find_element(By.NAME, CartPageLocators.name_update_cart_button)
+    with allure.step("Получение кнопки обновления корзины"):
+        return driver.find_element(By.NAME, CartPageLocators.name_update_cart_button)
 
 
 def click_to_update_cart_button(driver):
-    get_update_cart_button(driver).click()
-    wait_for_loading_cart(driver)
+    with allure.step("Обновление содержимого корзины с помощью кнопки обновления"):
+        get_update_cart_button(driver).click()
+        wait_for_updating_cart(driver)
 
 
 def find_empty_cart_message(driver):
     return driver.find_element(By.CLASS_NAME, CartPageLocators.class_empty_cart_message)
 
 
+@allure.step("Проверка что корзина пустая")
 def cart_is_empty(driver):
     try:
         find_empty_cart_message(driver)

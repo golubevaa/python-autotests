@@ -1,20 +1,19 @@
 import allure
-from random import choice, randint
+from random import randint
 
 from src.actions.pizza_page_actions.pizza_page_actions import (
     click_to_add_to_cart, find_add_pizza_notification, get_pizza_title, get_pizza_notification_text,
     send_keys_to_input_form
 )
-from src.utils.get_pizza_slider_info import get_all_possible_links
 
 
+@allure.feature("Страницы пицц")
+@allure.story("Уведомление о добавлении пиццы в корзину")
 class TestAddPizzaToCartNotification:
 
     @allure.title("Проверка появления уведомления о добавлении пиццы в корзину")
-    def test_notification_appearance(self, get_driver):
-        url = choice(get_all_possible_links())
-        driver = get_driver
-        driver.get(url)
+    def test_notification_appearance(self, pizza_page):
+        driver = pizza_page
 
         click_to_add_to_cart(driver)
 

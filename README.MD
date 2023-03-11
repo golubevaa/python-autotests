@@ -1,4 +1,4 @@
-# Тестовый репозитой - Pytest + Selenium (Selenoid)
+# Тестовый репозитой - Pytest + Selenium Grid
 
 ## Тесты для сайта http://pizzeria.skillbox.cc/
 
@@ -6,30 +6,34 @@
 
 ### Подготовка
 
-Запускаю с помощью docker контейнера с Selenoid. \
-Configuration manager: https://github.com/aerokube/cm/releases 
-
-Запуск Selenoid
+Требуется установленный докер.
+Для запуска selemiun из корневой директории:
 ```
-chmod +x cm
-./cm selenoid start --vnc
-```
-Если требуется Selenoid UI (будет доступен на порте 8080):
-```
-./cm selenoid-ui start
+docker compose up -d 
 ```
 
 Проектные зависимости в файлах environment.yml (использую conda) или requirements.txt.
 
 ### Запуск тестов
 
-Для запуска подготовила makefile с возможностью запуска всего проекта (make all_tests) или отдельных папок (cart_tests, main_tests  и т.д). \
-Запуск из корневой директории проекта.
+Для запуска подготовила makefile с возможностью запуска всего проекта или отдельных тестов.
+Команды:
+* all_tests - все тесты
+* cart_tests - тесты на корзину
+* pizza_tests - тесты на страницах пицц
+* main_tests - тесты главной страницы
+* only_sanity - тесты с маркером sanity
+* only_high_priority - тесты с маркером high_priority
+
+При желании запустить отдельные тесты потребуется запустить docker контейнеры с selenium.
+```
+docker compose up -d 
+```
+
 
 ### Планы
 
-* Добавить allure репорты (пока только тайтлы у тестов)
 * Добавить логирование
 * Переписать asserts на pyhamcrest
-* Допилить тесты :)
-* Сделать запуски на разных браузерах
+* Написать больше тестов :)
+* Сделать пайплайн в Actions
