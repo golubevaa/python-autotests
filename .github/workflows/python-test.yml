@@ -11,12 +11,9 @@ on:
           - chrome
           - firefox
           
-permissions:
-  contents: read
-
 jobs:
-  build:
-
+  test:
+    name: Test
     runs-on: ubuntu-latest
 
     steps:
