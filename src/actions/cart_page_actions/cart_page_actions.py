@@ -38,12 +38,12 @@ def get_additional_options(product_el):
 
 def parse_product_options(product_el: WebElement):
     return CartRow(
-            name=get_name(product_el),
-            additional_option=get_additional_options(product_el),
-            price=get_price(product_el),
-            amount=get_amount(product_el),
-            subtotal=get_subtotal_cost(product_el),
-            web_element=product_el
+        name=get_name(product_el),
+        additional_option=get_additional_options(product_el),
+        price=get_price(product_el),
+        amount=get_amount(product_el),
+        subtotal=get_subtotal_cost(product_el),
+        web_element=product_el
     )
 
 
