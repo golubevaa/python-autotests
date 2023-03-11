@@ -31,10 +31,8 @@ jobs:
         pip install -r requirements.txt
         
     - name: Selenium setup
-      uses: adrielcodeco/docker-compose-run-action@v1
-      with:
-        compose-file: docker-compose.yml
-        run-flags: -d
+      run: |
+        docker compose up -d
 
     - name: Test with pytest
       run: |
