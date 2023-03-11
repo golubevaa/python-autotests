@@ -1,8 +1,7 @@
 import requests
 from lxml import html
 
-from src.data.test_data import MAIN_PAGE_URL
-
+from src.data.site_links import MAIN_PAGE_URL
 
 xpath_slider = '//*[@id="accesspress_store_product-5"]'
 xpath_pizzas_in_slider = ".//a/h3"

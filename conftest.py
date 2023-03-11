@@ -5,5 +5,4 @@ pytest_plugins = [
 
 def pytest_addoption(parser):
     parser.addini("selenium_url", "Selenium Hub url")
-    parser.addini("main_page_url", "Main page url")
-    parser.addini("cart_page_url", "Cart page url")
+    parser.addoption("--browser", action="store", default="firefox", help="Browser type")

@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+import allure
 
 from src.locators.common_locators import CommonLocators
 from src.waits.cart_page_waits import wait_for_loading_cart
@@ -13,10 +14,12 @@ def get_cart_text(driver):
 
 
 def go_to_cart_via_menu(driver):
-    driver.find_element(By.ID, CommonLocators.id_cart_button).click()
-    wait_for_loading_cart(driver)
+    with allure.step("Переход в корзину с помощью общего меню"):
+        driver.find_element(By.ID, CommonLocators.id_cart_button).click()
+        wait_for_loading_cart(driver)
 
 
 def go_to_cart_using_cart_contents(driver):
-    driver.find_element(By.CSS_SELECTOR, CommonLocators.css_cart_locator).click()
-    wait_for_loading_cart(driver)
+    with allure.step("Переход в корзину через значок корзины"):
+        driver.find_element(By.CSS_SELECTOR, CommonLocators.css_cart_locator).click()
+        wait_for_loading_cart(driver)

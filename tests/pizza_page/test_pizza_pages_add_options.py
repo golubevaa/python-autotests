@@ -1,3 +1,5 @@
+from random import randint
+
 import allure
 import pytest
 
@@ -8,9 +10,10 @@ from src.actions.pizza_page_actions.pizza_page_actions import (
 )
 from src.data.test_data import ADD_BORTS, ALL_BORTS
 
-from src.waits.common_waits import wait_for_cart_info_changes
 
-
+@allure.feature("Страницы пицц")
+@allure.story("Дополнительные опции")
+@pytest.mark.high_priority
 class TestPizzaAddOptions:
 
     @allure.title("Проверка наличия дополнительных опций")
@@ -63,7 +66,7 @@ class TestPizzaAddOptions:
     @allure.title("Количество пицц - увеличение значения инпут формы")
     def test_increase_pizza_counter(self, pizza_page):
         driver = pizza_page
-        increase_value = "3"
+        increase_value = str(randint(2, 30))
 
         new_input_form = send_keys_to_input_form(driver=driver,
                                                  key=increase_value)
@@ -79,7 +82,5 @@ class TestPizzaAddOptions:
         send_keys_to_input_form(driver=driver,
                                 key=increase_value)
         click_to_add_to_cart(driver)
-        wait_for_cart_info_changes(driver=driver,
-                                   prev_cart_info=prev_cart_sum)
 
         assert prev_cart_sum == get_cart_text(driver)

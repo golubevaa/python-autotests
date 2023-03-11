@@ -144,4 +144,5 @@ geckdriver
 selenoid_linux_amd64
 
 #allure reports
-allure_*/
+allure_*
+allure-*
