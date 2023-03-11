@@ -39,6 +39,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest --alluredir=allure-results --browser=${{ github.event.inputs.browser }}
+        
     - name: Allure results
       uses: simple-elf/allure-report-action@master
       if: always()
@@ -48,6 +49,7 @@ jobs:
         allure_report: allure-report
         gh_pages: gh-pages
         allure_history: allure-history
+        
     - name: Deploy report to Github Pages
       if: always()
       uses: peaceiris/actions-gh-pages@v3
