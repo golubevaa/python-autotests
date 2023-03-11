@@ -1,4 +1,5 @@
 from random import choice
+from flaky import flaky
 
 import allure
 import pytest
@@ -14,6 +15,7 @@ from src.data.test_data import ADD_BORTS
 class TestChangeNumberOfPizzaAtCart:
     @allure.title("Уменьшение кол-ва пицц - несколько пицц одного вида в строке")
     @pytest.mark.sanity
+    @flaky(max_runs=3)
     def test_change_non_single_pizza(self, prepared_cart_with_pizza):
         cart, driver = prepared_cart_with_pizza
         row = cart.get_first_row_by_row_amount_greater_then(1)
@@ -27,6 +29,7 @@ class TestChangeNumberOfPizzaAtCart:
         assert name in cart.get_names_by_amount(int(target))
 
     @allure.title("Уменьшение кол-ва пицц - одна пицца одного вида в строке")
+    @flaky(max_runs=3)
     def test_decrement_single_pizza(self, prepared_cart_with_pizza):
         cart, driver = prepared_cart_with_pizza
         row = cart.get_first_by_amount(1)

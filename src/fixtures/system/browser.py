@@ -6,7 +6,7 @@ import pytest
 @pytest.fixture(scope="function")
 def get_driver(pytestconfig, request):
     browser = request.config.getoption("--browser")
-    selenium = pytestconfig.getini(f"selenium_url")
+    selenium = pytestconfig.getini("selenium_url")
 
     if browser == "chrome":
         options = webdriver.ChromeOptions()

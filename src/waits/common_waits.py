@@ -1,4 +1,3 @@
-import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from src.actions.common_actions import get_cart_text
 
