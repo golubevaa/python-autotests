@@ -12,7 +12,8 @@ class TestAddPizzaToCartNotification:
     def test_notification_appearance(self, pizza_page):
         pizza_page.add_to_cart()
 
-        assert pizza_page.find_notification()
+        with allure.step("Проверка появления уведомления в добавлении пиццы"):
+            assert pizza_page.find_notification()
 
     @allure.title("Верное название пиццы в уведомлении о добавлении пиццы")
     def test_pizza_name_at_notification(self, pizza_page):
@@ -20,7 +21,8 @@ class TestAddPizzaToCartNotification:
 
         pizza_page.add_to_cart()
 
-        assert pizza_name in pizza_page.find_notification().text
+        with allure.step("В уведомлении в добавлении пиццы указана верная пицца"):
+            assert pizza_name in pizza_page.find_notification().text
 
     @allure.title("Верное количество добавленных пицц в уведомлении о добавлении пиццы")
     def test_pizza_count_at_notification(self, pizza_page):
@@ -29,4 +31,5 @@ class TestAddPizzaToCartNotification:
         pizza_page.send_keys_to_input_form(key=increase_value)
         pizza_page.add_to_cart()
 
-        assert increase_value + NOTIFICATION_FACTOR in pizza_page.find_notification().text
+        with allure.step("В уведомлении в добавлении пиццы указана верное кол-во пицц"):
+            assert increase_value + NOTIFICATION_FACTOR in pizza_page.find_notification().text

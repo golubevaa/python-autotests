@@ -46,18 +46,20 @@ class CartTable(BasePage):
     def get_by_index(self, index):
         return self.cart_rows[index]
 
+    @allure.step(f"Получение первой пиццы, количество которой в ячейке = указанному значению")
     def get_first_by_amount(self, amount):
-        with allure.step(f"Получение первой пиццы, количество которой в ячейке = {amount}"):
+        with allure.step(f"Переданное значение: {amount}"):
             return [row for row in self.cart_rows if row.amount == amount][0]
 
     def get_first_by_add_option(self, add_option):
         with allure.step(f"Получение перовго элемента с доп. опцией = '{add_option}'"):
             return [row for row in self.cart_rows if (row.additional_option and add_option in row.additional_option)][0]
 
+    @allure.step("Получение первой пиццы, количество которой в ячейке равно указанному значению")
     def get_names_by_amount(self, amount):
-        with allure.step(f"Получение списка названий пицц, количество которых в корзине равно {amount}"):
-            return [row.name for row in self.cart_rows if row.amount == amount]
+        return [row.name for row in self.cart_rows if row.amount == amount]
 
+    @allure.step("Получение первой пиццы, количество которой в ячейке больше указанного значения")
     def get_first_row_by_row_amount_greater_then(self, value):
-        with allure.step(f"Получение первой пиццы, количество которой в ячейке больше {value}"):
+        with allure.step(f"Переданное значение: {value}"):
             return [row for row in self.cart_rows if row.amount > value][0]

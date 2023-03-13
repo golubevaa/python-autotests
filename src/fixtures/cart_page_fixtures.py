@@ -12,7 +12,6 @@ def prepared_cart_with_pizza(get_driver):
     with allure.step("Получение корзины с пиццами со всеми вариациями допов"):
         driver = get_driver
         params = shuffle_pizza_props()
-
         for param in params:
             go_to_pizza_page_and_add_to_cart(driver, param)
 

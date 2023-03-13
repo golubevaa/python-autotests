@@ -19,4 +19,5 @@ class TestGoToPizzaPage:
         url = main_page.open_pizza_page(pizza)
         pizza_page = PizzaPage(driver, url)
 
-        assert pizza_page.product_title == pizza
+        with allure.step("Проверка что открылась верная пицца"):
+            assert pizza_page.product_title == pizza

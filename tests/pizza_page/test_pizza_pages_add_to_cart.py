@@ -18,7 +18,8 @@ class TestAddPizzaToCartFromPage:
         pizza_page.go_to_cart_using_cart_contents()
         cart = CartPage(driver).cart
 
-        assert cart.get_by_index(0).name == pizza_title
+        with allure.step("В корзину добавлена верная пицца"):
+            assert cart.get_by_index(0).name == pizza_title
 
     @allure.title("Проверка добавления верного количества пицц в корзину")
     @pytest.mark.parametrize('pizza_to_add', INT_SAMPLE)
@@ -30,7 +31,8 @@ class TestAddPizzaToCartFromPage:
         pizza_page.go_to_cart_using_cart_contents()
         cart = CartPage(driver).cart
 
-        assert cart.count_products() == pizza_to_add
+        with allure.step("В корзину добавлено верное кол-во пицц"):
+            assert cart.count_products() == pizza_to_add
 
     @allure.title("Добавление пиццы с дополнительной опцией в корзину")
     @pytest.mark.parametrize("add_option", ADD_BORTS)
@@ -42,4 +44,5 @@ class TestAddPizzaToCartFromPage:
         pizza_page.go_to_cart_via_menu()
         cart = CartPage(driver).cart
 
-        assert add_option in cart.cart_rows[0].additional_option
+        with allure.step("В корзину добавлена пицца с верной доп. опцией"):
+            assert add_option in cart.cart_rows[0].additional_option

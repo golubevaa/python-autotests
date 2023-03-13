@@ -20,6 +20,7 @@ class PizzaPage(PageWithTopMenu):
     def doping_menu(self):
         return self.get_select(PizzaPageLocators.id_doping_menu)
 
+    @allure.step("Выбор допинга по имени")
     def select_doping_by_name(self, name):
         with allure.step(f"Выбор допинга: {name}"):
             for option in self.doping_menu.options:
@@ -33,13 +34,16 @@ class PizzaPage(PageWithTopMenu):
             if name in option.text:
                 return float(option.get_attribute("value"))
 
+    @allure.step("Изменение значения инпут формы")
     def send_keys_to_input_form(self, key):
         input_form = self.send_keys_to_input(locator=PizzaPageLocators.amount_input,
                                              key=key,
                                              element=None)
-        if input_form:
-            return input_form.get_attribute("value")
+        with allure.step(f"Новое значение: {key}"):
+            if input_form:
+                return input_form.get_attribute("value")
 
+    @allure.step("Добавление пиццы в корзину")
     def add_to_cart(self):
         self.click(PizzaPageLocators.add_to_cart_button)
         self.wait_for_cart_info_changes()
@@ -59,7 +63,7 @@ class PizzaPage(PageWithTopMenu):
     def find_notification(self):
         return self.find_proposed(locator=PizzaPageLocators.add_to_cart_notification, element=None)
 
-    @allure.step("Переход в корзину через уведомление о добавлении пиццы")
+    @allure.step("Переход в корзину через уведомления о добавлении пиццы")
     def go_to_cart_via_notification(self):
         notification = self.find_notification()
         url = self._find(notification, PizzaPageLocators.go_to_cart_from_notification).get_attribute("href")

@@ -18,10 +18,12 @@ class CartPage(PageWithTopMenu):
 
     @allure.step("Изменение кол-ва пицц в ячейке")
     def send_keys_to_pizza_form(self, key, element):
-        self.send_keys_to_input(locator=CartPageLocators.tag_pizza_amount,
-                                key=key,
-                                element=element)
+        with allure.step(f"Новое значение: {key}"):
+            self.send_keys_to_input(locator=CartPageLocators.tag_pizza_amount,
+                                    key=key,
+                                    element=element)
 
+    @allure.step("Клик на кнопку обновления корзины")
     def click_to_update_cart_button(self):
         self.click(CartPageLocators.name_update_cart_button)
         self.wait_for_updating()

@@ -1,3 +1,5 @@
+import allure
+
 from src.pages.pizza_page import PizzaPage
 
 

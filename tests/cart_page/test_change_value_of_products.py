@@ -22,7 +22,8 @@ class TestChangeNumberOfPizzaAtCart:
         cart_page.send_keys_to_pizza_form(element=pizza_element, key=target)
         cart_page.click_to_update_cart_button()
 
-        assert name in cart_page.cart.get_names_by_amount(target)
+        with allure.step("Кол-во пицц в ячейке изменилось на переданное значение"):
+            assert name in cart_page.cart.get_names_by_amount(target)
 
     @allure.title("Уменьшение кол-ва пицц - одна пицца одного вида в строке")
     @flaky(max_runs=3)
@@ -35,7 +36,8 @@ class TestChangeNumberOfPizzaAtCart:
         cart_page.send_keys_to_pizza_form(element=pizza_element, key=target)
         cart_page.click_to_update_cart_button()
 
-        assert cart_page.cart.get_names_by_amount(target) == []
+        with allure.step("Пицца удалена из корзины"):
+            assert cart_page.cart.get_names_by_amount(target) == []
 
     @pytest.mark.high_priority
     @allure.title("Уменьшение кол-ва пицц - одна пицца в корзине")
@@ -47,7 +49,8 @@ class TestChangeNumberOfPizzaAtCart:
         cart_page.send_keys_to_pizza_form(element=row, key=target)
         cart_page.click_to_update_cart_button()
 
-        assert cart_page.cart_is_empty()
+        with allure.step("Проверка что корзина пуста"):
+            assert cart_page.cart_is_empty()
 
     @allure.title("Изменение кол-ва пицц - пицца с доп. опциями")
     @pytest.mark.parametrize("add_option", ADD_BORTS)
@@ -60,4 +63,5 @@ class TestChangeNumberOfPizzaAtCart:
         cart_page.send_keys_to_pizza_form(element=pizza_element, key=target)
         cart_page.click_to_update_cart_button()
 
-        assert cart_page.cart.get_first_by_add_option(add_option).amount == target
+        with allure.step("Проверка что количество пицц равно целевому значению"):
+            assert cart_page.cart.get_first_by_add_option(add_option).amount == target
