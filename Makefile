@@ -19,7 +19,7 @@ cart_tests: dc-up
 .PHONY: pizza_tests
 
 pizza_tests: dc-up
-	pytest --alluredir=./allure-results tests/pizza_page
+	pytest --alluredir=./allure-results tests/pizza_page -n auto
 	docker compose down
 .PHONY: main_tests
 
@@ -30,7 +30,7 @@ main_tests: dc-up
 .PHONY: only_sanity
 
 only_sanity: dc-up
-	pytest --alluredir=./allure-results tests/main_page -m sanity
+	pytest --alluredir=./allure-results tests/main_page
 	docker compose down
 
 .PHONY: only_high_priority

@@ -1,10 +1,13 @@
+from selenium.webdriver.common.by import By
+
+
 class PizzaPageLocators:
 
-    id_primary_content = "primary"
-    class_pizza_title = "product_title"
-    css_pizza_price = "p.price bdi"
-    id_doping_menu = "board_pack"
-    css_amount_input = "input[type='number']"
-    css_add_to_cart_button = "button[name='add-to-cart']"
-    class_add_to_cart_notification = "woocommerce-message"
-    class_go_to_cart_from_notification = "wc-forward"
+    id_primary_content = (By.ID, "primary")
+    pizza_title = (By.CLASS_NAME, "product_title")
+    pizza_price = (By.CSS_SELECTOR, "p.price bdi")
+    id_doping_menu = (By.ID, "board_pack")
+    amount_input = (By.CSS_SELECTOR, "input[type='number']")
+    add_to_cart_button = (By.CSS_SELECTOR, "button[name='add-to-cart']")
+    add_to_cart_notification = (By.CLASS_NAME, "woocommerce-message")
+    go_to_cart_from_notification = (By.CLASS_NAME, "wc-forward")

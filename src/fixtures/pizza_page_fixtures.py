@@ -3,25 +3,27 @@ from random import choice
 import allure
 import pytest
 
-from src.data.site_links import MAIN_PAGE_URL
 from src.data.test_data import ALL_PIZZA_LINKS
-from src.models.main_page.slider import PizzaSlider
+from src.pages.main_page import MainPage
+from src.pages.pizza_page import PizzaPage
 
 
 @pytest.fixture(scope="function")
 def pizza_page(get_driver):
     with allure.step("Открытие страницы пиццы"):
         url = choice(ALL_PIZZA_LINKS)
-        driver = get_driver
-        driver.get(url)
-    yield driver
+    yield PizzaPage(get_driver, url)
 
 
 @pytest.fixture(scope="function")
 def slider(get_driver):
     with allure.step("Получение слайдера с пиццами"):
-        driver = get_driver
-        driver.get(MAIN_PAGE_URL)
+        main_page = MainPage(get_driver)
 
-        slider = PizzaSlider(driver)
+        slider = main_page.slider
     yield slider
+
+
+@pytest.fixture(scope="function")
+def main_page(get_driver):
+    yield MainPage(get_driver)
