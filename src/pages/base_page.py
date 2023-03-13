@@ -1,3 +1,4 @@
+import allure
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
@@ -14,7 +15,7 @@ class BasePage:
         return self.driver.find_element(*locator)
 
     def find_elements(self, locator):
-        return self.driver.find_element(*locator)
+        return self.driver.find_elements(*locator)
 
     @staticmethod
     def _find(web_element, locator):
@@ -34,7 +35,8 @@ class BasePage:
         hover.perform()
 
     def open(self, url):
-        self.driver.get(url)
+        with allure.step(f"Открытие страницы: {url}"):
+            self.driver.get(url)
 
     def title(self):
         return self.driver.title
@@ -44,6 +46,9 @@ class BasePage:
 
     def text(self, locator):
         return self.find_element(locator).text
+
+    def click(self, locator):
+        self.wait.until(ec.element_to_be_clickable(locator)).click()
 
     def wait_for_presence(self, locator):
         return self.wait.until(
@@ -62,8 +67,12 @@ class BasePage:
     def get_select(self, locator):
         return Select(self.find_element(locator))
 
-    def send_keys_to_input(self, locator, key):
-        form = self.find_element(locator)
+    def send_keys_to_input(self, locator, key, element: None):
+        if element:
+            form = self._find(web_element=element, locator=locator)
+        else:
+            form = self.find_element(locator)
         form.clear()
         form.send_keys(key)
-        return self.find_element(locator)
+        self.driver.execute_script("document.activeElement.blur();")
+        return self.find_element(locator) if not element else self._find(element, locator)

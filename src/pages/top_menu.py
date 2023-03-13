@@ -18,6 +18,7 @@ class PageWithTopMenu(BasePage):
     @allure.step("Получение стоимости добавленных продуктов в корзине (топ бар)")
     @property
     def cart_text(self):
+        self._cart_text = self.get_cart_text()
         return self._cart_text
 
     def get_cart_text(self):
@@ -38,4 +39,3 @@ class PageWithTopMenu(BasePage):
     @allure.step("Переход в корзину через значок корзины")
     def go_to_cart_using_cart_contents(self):
         self.find_element(CommonLocators.cart_locator).click()
-

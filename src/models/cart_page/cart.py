@@ -1,5 +1,4 @@
 import allure
-from selenium.common import NoSuchElementException
 
 from src.locators.cart_page_locators import CartPageLocators
 from src.models.cart_page.cart_row import CartRow
@@ -20,11 +19,8 @@ class CartTable(BasePage):
             return options.text
 
     def _all_info_about_cart_products(self):
-        result = []
         products = self._get_cart_products()
         result = list(map(self._parse_product_options, products))
-        # for i in range(len(products)):
-        #     result.append(parse_product_options(products[i]))
         return result
 
     def _get_cart_products(self):

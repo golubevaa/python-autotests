@@ -19,4 +19,4 @@ class TestGoToPizzaPage:
         url = main_page.open_pizza_page(pizza)
         pizza_page = PizzaPage(driver, url)
 
-        assert pizza_page.product_title == pizza.lower()
+        assert pizza_page.product_title == pizza
