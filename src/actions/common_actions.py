@@ -8,7 +8,7 @@ import re
 
 
 def get_cart_text(driver):
-    cart_text = driver.find_element(By.CSS_SELECTOR, CommonLocators.css_cart_locator).text
+    cart_text = driver.find_element(By.CSS_SELECTOR, CommonLocators.cart_locator).text
     result = re.sub(r'[^0-9,]', '', cart_text)
     return str_to_float(result)
 
@@ -21,5 +21,5 @@ def go_to_cart_via_menu(driver):
 
 def go_to_cart_using_cart_contents(driver):
     with allure.step("Переход в корзину через значок корзины"):
-        driver.find_element(By.CSS_SELECTOR, CommonLocators.css_cart_locator).click()
+        driver.find_element(By.CSS_SELECTOR, CommonLocators.cart_locator).click()
         wait_for_loading_cart(driver)

@@ -1,12 +1,7 @@
 import allure
 import pytest
 
-from src.actions.common_actions import get_cart_text
-from src.actions.main_page_actions.main_page_actions import (
-    get_add_to_cart_button, move_to_add_to_cart, add_product_to_cart, slick_slider_until_pizza_will_be_displayed
-)
 from src.data.test_data import ALL_PIZZA_NAMES
-from src.waits.common_waits import wait_for_cart_info_changes
 from src.locators.main_page_locators import MainPageLocators as Locators
 
 
@@ -16,7 +11,7 @@ class TestMainPageSlider:
 
     @allure.title("Прокрутка слайдера на главной странице вправо/влево")
     @pytest.mark.sanity
-    @pytest.mark.parametrize("slick_destination", [Locators.class_slider_slick_prev, Locators.class_slider_slick_next],
+    @pytest.mark.parametrize("slick_destination", [Locators.slider_slick_prev, Locators.slider_slick_next],
                              ids=["slick to previous", "slick to next"])
     def test_slick_pizza_slider(self, slick_destination, slider):
         visible_pizzas = slider.get_names()
@@ -28,27 +23,23 @@ class TestMainPageSlider:
 
     @allure.title("Появление кнопки 'В корзину' при наведении на пиццу")
     @pytest.mark.parametrize("current", ALL_PIZZA_NAMES)
-    def test_add_to_cart_button_appearance(self, current, slider):
-        slick_slider_until_pizza_will_be_displayed(slider=slider,
-                                                   pizza_name=current)
+    def test_add_to_cart_button_appearance(self, current, main_page):
+        main_page.slick_slider_until_pizza_will_be_displayed(pizza_name=current)
+        slider = main_page.slider
 
-        pizza = slider.get_by_name(current).web_element
-        add_to_cart_button = get_add_to_cart_button(pizza)
-        move_to_add_to_cart(pizza)
+        add_to_cart_button = slider.get_add_to_cart_button(product=current)
+        main_page.move_to_button(add_to_cart_button)
 
         assert add_to_cart_button.is_displayed()
 
     @allure.title("Появление кнопки 'В корзину' после добавления пиццы в корзину")
     @pytest.mark.skip(reason="known issue")
     @pytest.mark.parametrize("current", ALL_PIZZA_NAMES)
-    def test_add_to_cart_button_appearance_when_add_to_cart(self, current, slider):
-        slick_slider_until_pizza_will_be_displayed(slider=slider, pizza_name=current)
-        pizza = slider.get_by_name(current).web_element
-        add_to_cart_button = get_add_to_cart_button(pizza)
-        empty_cart_info = get_cart_text(slider.driver)
+    def test_add_to_cart_button_appearance_when_add_to_cart(self, current, main_page):
+        main_page.slick_slider_until_pizza_will_be_displayed(pizza_name=current)
+        slider = main_page.slider
 
-        add_product_to_cart(pizza)
-        wait_for_cart_info_changes(driver=slider.driver,
-                                   prev_cart_info=empty_cart_info)
+        main_page.add_to_cart(product=current)
+        add_to_cart_button = slider.get_add_to_cart_button(product=current)
 
         assert add_to_cart_button.is_displayed()

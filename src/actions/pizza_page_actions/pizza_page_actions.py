@@ -16,13 +16,13 @@ def open_pizza_page(pizza_element):
 
 def get_pizza_title(driver, replace_quotes=True):
     with allure.step("Получение названия пиццы"):
-        title = driver.find_element(By.CLASS_NAME, PizzaPageLocators.class_pizza_title).text.lower()
+        title = driver.find_element(By.CLASS_NAME, PizzaPageLocators.pizza_title).text.lower()
         return rebuild_name_to_cart_page_format(title) if replace_quotes else title
 
 
 def get_pizza_price(driver):
     with allure.step("получение цены пиццы"):
-        price = driver.find_element(By.CSS_SELECTOR, PizzaPageLocators.css_pizza_price).text[:-1]
+        price = driver.find_element(By.CSS_SELECTOR, PizzaPageLocators.pizza_price).text[:-1]
         return str_to_float(price)
 
 
@@ -57,20 +57,20 @@ def select_doping_by_name(menu, name):
 
 def send_keys_to_input_form(driver, key):
     with allure.step(f"Изменение кол-ва пицц в инпут форме: {key}"):
-        counter = driver.find_element(By.CSS_SELECTOR, PizzaPageLocators.css_amount_input)
+        counter = driver.find_element(By.CSS_SELECTOR, PizzaPageLocators.amount_input)
         counter.clear()
         counter.send_keys(key)
-        return driver.find_element(By.CSS_SELECTOR, PizzaPageLocators.css_amount_input)
+        return driver.find_element(By.CSS_SELECTOR, PizzaPageLocators.amount_input)
 
 
 def click_to_add_to_cart(driver):
     with allure.step("Нажатие на кнопку 'добавить в корзину'"):
-        driver.find_element(By.CSS_SELECTOR, PizzaPageLocators.css_add_to_cart_button).click()
+        driver.find_element(By.CSS_SELECTOR, PizzaPageLocators.add_to_cart_button).click()
 
 
 def get_add_pizza_notification(driver):
     with allure.step("Поиск уведомления о добавлении пиццы в корзину на странице"):
-        return driver.find_element(By.CLASS_NAME, PizzaPageLocators.class_add_to_cart_notification)
+        return driver.find_element(By.CLASS_NAME, PizzaPageLocators.add_to_cart_notification)
 
 
 def find_add_pizza_notification(driver):
@@ -89,5 +89,5 @@ def get_pizza_notification_text(driver):
 def go_to_cart_via_notification(driver):
     with allure.step("Переход в корзину через уведомление о добавлении пиццы"):
         notification = get_add_pizza_notification(driver)
-        notification.find_element(By.CLASS_NAME, PizzaPageLocators.class_go_to_cart_from_notification).click()
+        notification.find_element(By.CLASS_NAME, PizzaPageLocators.go_to_cart_from_notification).click()
         wait_for_loading_cart(driver)

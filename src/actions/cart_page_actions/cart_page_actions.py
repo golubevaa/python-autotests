@@ -10,28 +10,28 @@ from src.waits.cart_page_waits import wait_for_updating_cart
 
 
 def get_cart_products(driver):
-    return driver.find_elements(By.CSS_SELECTOR, CartPageLocators.css_cart_product_table)
+    return driver.find_elements(*CartPageLocators.css_cart_product_table)
 
 
 def get_name(product_el):
-    return product_el.find_element(By.CLASS_NAME, CartPageLocators.class_name_of_product).text
+    return product_el.find_element(*CartPageLocators.class_name_of_product).text
 
 
 def get_price(product_el):
-    return str_to_float(product_el.find_element(By.CLASS_NAME, CartPageLocators.class_price_of_product).text[:-1])
+    return str_to_float(product_el.find_element(*CartPageLocators.class_price_of_product).text[:-1])
 
 
 def get_amount(product_el):
-    return int(product_el.find_element(By.CSS_SELECTOR, CartPageLocators.css_amount_input).get_attribute("value"))
+    return int(product_el.find_element(*CartPageLocators.css_amount_input).get_attribute("value"))
 
 
 def get_subtotal_cost(product_el):
-    return str_to_float(product_el.find_element(By.CLASS_NAME, CartPageLocators.class_subtotal_product).text[:-1])
+    return str_to_float(product_el.find_element(*CartPageLocators.class_subtotal_product).text[:-1])
 
 
 def get_additional_options(product_el):
     try:
-        return product_el.find_element(By.CSS_SELECTOR, CartPageLocators.css_add_option).text
+        return product_el.find_element(*CartPageLocators.css_add_option).text
     except NoSuchElementException:
         return None
 
@@ -65,7 +65,7 @@ def send_keys_to_number_of_pizza_form(pizza_row, key):
 
 def get_update_cart_button(driver):
     with allure.step("Получение кнопки обновления корзины"):
-        return driver.find_element(By.NAME, CartPageLocators.name_update_cart_button)
+        return driver.find_element(*CartPageLocators.name_update_cart_button)
 
 
 def click_to_update_cart_button(driver):
@@ -75,7 +75,7 @@ def click_to_update_cart_button(driver):
 
 
 def find_empty_cart_message(driver):
-    return driver.find_element(By.CLASS_NAME, CartPageLocators.class_empty_cart_message)
+    return driver.find_element(*CartPageLocators.class_empty_cart_message)
 
 
 @allure.step("Проверка что корзина пустая")
@@ -88,4 +88,4 @@ def cart_is_empty(driver):
 
 
 def remove_product(product):
-    product.find_element(By.CLASS_NAME, CartPageLocators.class_remove_button).click()
+    product.find_element(*CartPageLocators.class_remove_button).click()
