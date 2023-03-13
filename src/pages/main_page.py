@@ -34,10 +34,7 @@ class MainPage(PageWithTopMenu):
         total_cost = self.get_cart_text()
         return pizza_in_cart, total_cost
 
-    @allure.step("Открытие страницы пиццы")
     def open_pizza_page(self, name):
         self.slider.get_pizza_by_name(name).web_element.click()
-        self.wait.until(
-            ec.presence_of_element_located(PizzaPageLocators.id_primary_content)
-        )
+        self.wait_for_presence(PizzaPageLocators.id_primary_content)
         return self.get_url()

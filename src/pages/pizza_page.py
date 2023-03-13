@@ -11,14 +11,16 @@ class PizzaPage(PageWithTopMenu):
 
         super().__init__(driver, url)
         self.product_title = self.get_title()
+        self.cart_format_product_title = rebuild_name_to_cart_page_format(self.product_title)
         self.doping_menu = self.doping_menu()
 
     def get_title(self):
-        return self.text(PizzaPageLocators.pizza_title).lower()
+        return self.text(PizzaPageLocators.pizza_title)
 
     def doping_menu(self):
         return self.get_select(PizzaPageLocators.id_doping_menu)
 
+    @allure.step("Выбор допинга по имени")
     def select_doping_by_name(self, name):
         with allure.step(f"Выбор допинга: {name}"):
             for option in self.doping_menu.options:
@@ -26,23 +28,30 @@ class PizzaPage(PageWithTopMenu):
                     self.doping_menu.select_by_visible_text(option.text)
                     return
 
-    @allure.step(f"Получение цены допинга")
+    @allure.step("Получение цены допинга")
     def get_doping_price(self, name):
         for option in self.doping_menu.options:
             if name in option.text:
                 return float(option.get_attribute("value"))
 
+    @allure.step("Изменение значения инпут формы")
     def send_keys_to_input_form(self, key):
-        return self.send_keys_to_input(locator=PizzaPageLocators.amount_input, key=key)
+        input_form = self.send_keys_to_input(locator=PizzaPageLocators.amount_input,
+                                             key=key,
+                                             element=None)
+        with allure.step(f"Новое значение: {key}"):
+            if input_form:
+                return input_form.get_attribute("value")
 
+    @allure.step("Добавление пиццы в корзину")
     def add_to_cart(self):
-        self.find_element(PizzaPageLocators.add_to_cart_button).click()
+        self.click(PizzaPageLocators.add_to_cart_button)
         self.wait_for_cart_info_changes()
 
     @allure.step("Получение списка дополнительных опций")
     def get_options_text(self):
         result = [option.text if "-" not in option.text else option.text.split(" - ")[0]
-                  for option in self.doping_menu()]
+                  for option in self.doping_menu.options]
         return result
 
     @allure.step("получение цены пиццы")
@@ -52,11 +61,10 @@ class PizzaPage(PageWithTopMenu):
 
     @allure.step("Поиск уведомления о добавлении пиццы в корзину")
     def find_notification(self):
-        return self.find_proposed(PizzaPageLocators.add_to_cart_notification)
+        return self.find_proposed(locator=PizzaPageLocators.add_to_cart_notification, element=None)
 
-    def add_to_cart_and_get_content(self):
-        self.add_to_cart()
-        self.go_to_cart_via_menu()
-
-
-
+    @allure.step("Переход в корзину через уведомления о добавлении пиццы")
+    def go_to_cart_via_notification(self):
+        notification = self.find_notification()
+        url = self._find(notification, PizzaPageLocators.go_to_cart_from_notification).get_attribute("href")
+        self.open(url)

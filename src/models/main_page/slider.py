@@ -30,7 +30,8 @@ class PizzaSlider(BasePage):
 
     @allure.step("Получение списка видимых пицц")
     def get_names(self):
-        return [pizza.name for pizza in self.visible_pizzas]
+        names = [pizza.name for pizza in self.visible_pizzas]
+        return names
 
     def get_pizza_by_name(self, name):
         return [pizza for pizza in self.visible_pizzas if pizza.name == name.lower()][0]
@@ -57,6 +58,7 @@ class PizzaSlider(BasePage):
             )
         return pizza_list
 
+    @allure.step("Получение кнопки 'В корзину'")
     def get_add_to_cart_button(self, product):
         pizza = self.get_pizza_by_name(product).web_element
         return self._find(pizza, MainPageLocators.cart_button)
