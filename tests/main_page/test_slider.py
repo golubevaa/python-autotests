@@ -34,7 +34,7 @@ class TestMainPageSlider:
             assert add_to_cart_button.is_displayed()
 
     @allure.title("Появление кнопки 'В корзину' после добавления пиццы в корзину")
-    @pytest.mark.skip(reason="known issue")
+    @pytest.mark.xfail(reason="known issue")
     @pytest.mark.parametrize("current", ALL_PIZZA_NAMES)
     def test_add_to_cart_button_appearance_when_add_to_cart(self, current, main_page):
         main_page.slick_slider_until_pizza_will_be_displayed(pizza_name=current)
